@@ -891,6 +891,131 @@ button {
   margin-top: 0.4rem;
 }
 
+.custom-popup .popup-tag--green {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: #34d399;
+}
+
+/* Leyenda Flotante del Mapa (Glassmorphism) */
+.map-legend {
+  background: rgba(12, 17, 29, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: 0.76rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  line-height: 1.4;
+  pointer-events: auto;
+  margin: 12px;
+}
+
+.map-legend__header {
+  font-weight: 600;
+  font-size: 0.74rem;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.map-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  color: var(--color-text-secondary);
+}
+
+.map-legend__item:last-child {
+  margin-bottom: 0;
+}
+
+.map-legend__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.map-legend__swatch--sealed {
+  background: rgba(244, 63, 94, 0.25);
+  border: 1.5px dashed #f43f5e;
+}
+
+.map-legend__swatch--green {
+  background: #10b981;
+  border: 1px solid #34d399;
+  border-radius: 50%;
+}
+
+.map-legend__swatch--primary {
+  background: #2dd4bf;
+  border: 1px solid #5eead4;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(45, 212, 191, 0.6);
+}
+
+.map-legend__swatch--flood {
+  background: #38bdf8;
+  border: 1px solid #7dd3fc;
+  border-radius: 50%;
+}
+
+/* Tooltip temático del perímetro de Villa Santa Rita */
+.map-district-tooltip {
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  padding: 2px 4px;
+}
+
+.map-district-tooltip .tooltip-title {
+  font-weight: 700;
+  color: #f43f5e;
+  margin-bottom: 3px;
+  font-size: 0.85rem;
+}
+
+.map-district-tooltip .tooltip-metric {
+  color: #cbd5e1;
+}
+
+.map-district-tooltip .accent-danger {
+  color: #fb7185;
+  font-weight: 600;
+}
+
+.map-district-tooltip .accent-warning {
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.leaflet-tooltip {
+  background: rgba(12, 17, 29, 0.95) !important;
+  border: 1px solid rgba(244, 63, 94, 0.4) !important;
+  color: #f8fafc !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6) !important;
+}
+
+.leaflet-tooltip-top:before {
+  border-top-color: rgba(12, 17, 29, 0.95) !important;
+}
+.leaflet-tooltip-bottom:before {
+  border-bottom-color: rgba(12, 17, 29, 0.95) !important;
+}
+.leaflet-tooltip-left:before {
+  border-left-color: rgba(12, 17, 29, 0.95) !important;
+}
+.leaflet-tooltip-right:before {
+  border-right-color: rgba(12, 17, 29, 0.95) !important;
+}
+
 /* --------------------------------------------------------------------------
    10. SECCIÓN: METODOLOGÍA (TIMELINE)
    -------------------------------------------------------------------------- */
