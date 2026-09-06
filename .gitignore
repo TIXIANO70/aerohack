@@ -2,3 +2,8 @@
 Thumbs.db
 *.log
 .temp/
+
+# Configuración local con credenciales
+js/config.js
+.env
+.env.*

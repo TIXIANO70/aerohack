@@ -449,11 +449,14 @@ button {
   align-items: center;
   justify-content: center;
   opacity: 0.55;
-  transition: opacity var(--transition-fast), filter var(--transition-fast);
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 
 .partner-item:hover {
-  opacity: 0.95;
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
 .partner-logo {

@@ -79,17 +79,31 @@ function createCustomPin(isPrimary) {
 /**
  * Inicializa la instancia del mapa Leaflet.
  */
-function buildMap() {
+async function buildMap() {
   const mapContainer = document.getElementById('map-container');
   if (!mapContainer || !window.L) return;
+
+  // Carga defensiva de la API key desde config.js
+  let apiKey = '';
+  try {
+    const config = await import('./config.js');
+    if (config.CARTO_API_KEY && config.CARTO_API_KEY !== 'TU_API_KEY_AQUI') {
+      apiKey = config.CARTO_API_KEY.trim();
+    }
+  } catch {
+    // Si config.js no existe o aún no fue configurado, continúa con fallback
+  }
 
   const map = window.L.map('map-container', {
     scrollWheelZoom: false, // Evita atrapar el scroll de página accidentalmente
   }).setView(VILLA_SANTA_RITA_COORDS, MAP_INITIAL_ZOOM);
 
-  // Tiles de CartoDB Dark Matter (open source, oscuros y sin requerir API key)
-  window.L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  const tileUrl = apiKey
+    ? `https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png?key=${apiKey}`
+    : 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png';
+
+  window.L.tileLayer(tileUrl, {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
     maxZoom: MAP_MAX_ZOOM,
   }).addTo(map);

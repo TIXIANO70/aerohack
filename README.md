@@ -1,73 +1,30 @@
-# 🌱 Santa Rita Verde — Web de Presentación
+# Santa Rita Verde — Web de Presentación
 
-Plataforma web de divulgación e impacto para el proyecto **Santa Rita Verde**, desarrollado por el **Equipo 2** en el marco del programa **AeroHack Joven** (Fundación Ciencia Joven, STEM Americas, PADF y Boeing).
+Plataforma web interactiva para el proyecto **Santa Rita Verde**, desarrollado por el **Equipo 2** en el marco del programa **AeroHack Joven** (iniciativa de Fundación Ciencia Joven, STEM Americas, PADF y Boeing).
 
-La web presenta una experiencia narrativa interactiva (*scroll storytelling*) orientada tanto al panel de evaluación del certamen como a la comunidad de vecinos, instituciones y organismos públicos de la Ciudad de Buenos Aires.
+El proyecto nace para dar respuesta a un problema urgente de Villa Santa Rita (Comuna 11, CABA): es uno de los barrios con mayor déficit de espacio verde de toda la ciudad (apenas 0,01 m² por habitante frente a los 9 m² mínimos que recomienda la OMS) y sufre anegamientos constantes cada vez que llueve con fuerza.
 
----
-
-## 🎯 Características Principales
-
-1. **Narrativa Visual y Diagnóstico Territorial:**
-   - Presentación del problema hidrológico crítico de Villa Santa Rita (apenas 0,01 m² de espacio verde por habitante frente a los 9 m² mínimos de la OMS).
-   - Animación dinámica de contadores numéricos y métricas de absorción pluvial.
-
-2. **Comparador Antes / Después (Street Transformation Slider):**
-   - Comparación interactiva arrastrable (mouse, touch en pantallas móviles y flechas del teclado) entre una esquina real del barrio en su estado actual (asfalto impermeable, charcos y anegamiento) y su versión transformada con infraestructura verde urbana (terrazas vivas, veredas drenantes y canteros de biorretención).
-
-3. **Diagrama Interactivo de Ingeniería Hidrológica:**
-   - Corte transversal esquemático en SVG puro donde el usuario explora y activa las distintas capas del sistema (lluvia, terrazas verdes, veredas permeables, jardines de lluvia, cañería pluvial aliviada y recarga del acuífero freático).
-   - Panel lateral con métricas de capacidad de retención y tiempos de desfase de pico.
-
-4. **Cartografía Geoespacial con Leaflet.js:**
-   - Mapa interactivo con tema oscuro (CartoDB Dark Matter) centrado en Villa Santa Rita (Comuna 11, CABA).
-   - Marcadores de la cuadra testigo piloto y puntos críticos de anegamiento (Álvarez Jonte, Nazca, etc.).
-
-5. **Timeline de Fases Design Thinking:**
-   - Hoja de ruta vertical que documenta las 6 etapas metodológicas del proyecto (Empatizar, Definir, Idear, Prototipar, Testear y Comunicar).
-
-6. **Triple Impacto y Convocatoria:**
-   - Desglose de los pilares social, ambiental y económico del ODS 11 (Ciudades y Comunidades Sostenibles).
+A través de esta web mostramos de manera visual e interactiva nuestra propuesta de infraestructura verde urbana: cómo transformar calles, veredas y techos para absorber y retener el agua de lluvia antes de que colapse el sistema pluvial.
 
 ---
 
-## 🏗️ Arquitectura Técnica y Clean Code
+## Qué vas a encontrar en la web
 
-El proyecto fue desarrollado estrictamente bajo principios de **Clean Code**, sin frameworks pesados ni dependencias de compilación:
-
-- **Estructura Modular (SRP):**
-  - `css/styles.css`: Hojas de estilo estructuradas lógicamente (Design Tokens → Resets → Componentes → Secciones → Media Queries).
-  - `js/main.js`: Orquestador y bootstrap (importación nativa de ES Modules).
-  - `js/navbar.js`: Responsabilidad exclusiva sobre el scroll glassmorphism y menú responsive.
-  - `js/counters.js`: Observadores de intersección y animación de métricas.
-  - `js/comparison-slider.js`: Componente aislado de comparación antes/después con cálculo matemático desacoplado de posición y eventos touch/mouse unificados.
-  - `js/diagram.js`: Control de capas SVG y conmutación de fichas informativas.
-  - `js/map.js`: Lazy loading y renderizado de capas geoespaciales con Leaflet.
-- **Cero Magic Numbers:** Todas las constantes de animación, umbrales de scroll y coordenadas están centralizadas en `SCREAMING_SNAKE_CASE`.
-- **Programación Defensiva:** *Guard clauses* en cada inicializador para prevenir excepciones en consola si algún nodo DOM no existe.
-- **Accesibilidad (a11y):** Roles semánticos ARIA, navegación por teclado y contraste de color optimizado.
+1. **Diagnóstico del barrio:** Datos claros sobre la impermeabilización del suelo y el déficit verde, junto con contadores dinámicos de absorción hídrica.
+2. **Comparador interactivo antes y después:** Un slider para arrastrar y comparar una esquina real del barrio hoy (asfalto, charcos y agua estancada) frente a cómo quedaría transformada con veredas permeables, terrazas vivas y jardines de lluvia.
+3. **Esquema de funcionamiento hidrológico:** Un corte transversal interactivo para explorar capa por capa cómo viaja el agua desde la lluvia y los techos hasta recargar las napas subterráneas, aliviando los conductos pluviales.
+4. **Mapa de zonas críticas:** Mapa interactivo de Villa Santa Rita donde se identifican las esquinas y avenidas más vulnerables a las inundaciones (como Álvarez Jonte o Nazca) y la ubicación de la primera cuadra piloto propuesta (Terrero y J.A. García).
+5. **Metodología Design Thinking:** El recorrido en 6 etapas que hicimos en equipo para investigar, validar con vecinos, idear y prototipar la solución (Empatizar, Definir, Idear, Prototipar, Testear y Comunicar).
+6. **Triple Impacto:** Cómo la propuesta genera beneficios sociales, ambientales y económicos en el barrio, en sintonía con el ODS 11 (Ciudades y Comunidades Sostenibles).
 
 ---
 
-## 🚀 Despliegue en GitHub Pages
+## Organizaciones que acompañan la iniciativa
 
-Al tratarse de una web estática pura (HTML5, CSS3, ES Modules y assets locales), su publicación en **GitHub Pages** es directa:
+Este trabajo se desarrolló con el apoyo y la articulación de:
 
-1. Subir los cambios a la rama principal (`main` o `master`) de tu repositorio GitHub.
-2. Ir a **Settings** > **Pages** en el repositorio.
-3. En **Build and deployment** > **Source**, seleccionar **Deploy from a branch**.
-4. Elegir la rama correspondiente y la carpeta raíz (`/` o `/aerohack`).
-5. En unos segundos, el sitio estará disponible públicamente bajo `https://<usuario>.github.io/<repo>/`.
-
----
-
-## 🧪 Pruebas Locales
-
-Para levantar un servidor de pruebas en tu máquina local:
-
-```bash
-cd aerohack
-python3 -m http.server 8080
-```
-
-Luego, abrir en el navegador `http://localhost:8080`.
+- **AeroHack Joven**
+- **Fundación Ciencia Joven**
+- **The Boeing Company**
+- **Fundación Panamericana para el Desarrollo (PADF)**
+- **STEM Americas**
