@@ -3,7 +3,6 @@ Thumbs.db
 *.log
 .temp/
 
-# Configuración local con credenciales
-js/config.js
+# Entorno local
 .env
 .env.*

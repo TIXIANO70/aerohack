@@ -76,6 +76,9 @@ function createCustomPin(isPrimary) {
   });
 }
 
+// Clave pública para basemaps oscuros de CARTO
+const DEFAULT_CARTO_API_KEY = 'cb1_2yk5_1_df335013d3ba1683ed6841b5';
+
 /**
  * Inicializa la instancia del mapa Leaflet.
  */
@@ -83,15 +86,15 @@ async function buildMap() {
   const mapContainer = document.getElementById('map-container');
   if (!mapContainer || !window.L) return;
 
-  // Carga defensiva de la API key desde config.js
-  let apiKey = '';
+  // Carga defensiva de la API key desde config.js con fallback garantizado
+  let apiKey = DEFAULT_CARTO_API_KEY;
   try {
     const config = await import('./config.js');
     if (config.CARTO_API_KEY && config.CARTO_API_KEY !== 'TU_API_KEY_AQUI') {
       apiKey = config.CARTO_API_KEY.trim();
     }
   } catch {
-    // Si config.js no existe o aún no fue configurado, continúa con fallback
+    // Si config.js no carga (ej. CORS en file://), mantiene la clave por defecto
   }
 
   const map = window.L.map('map-container', {
