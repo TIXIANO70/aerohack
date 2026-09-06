@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Geometric urban grid + organic leaf symbiosis -->
+  <defs>
+    <linearGradient id="logoGrad" x1="6" y1="42" x2="42" y2="6" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0d9488"/>
+      <stop offset="50%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="gridGrad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#14b8a6" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Architectural isometric baseline grid -->
+  <path d="M8 28L24 37L40 28" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 37V45" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+  <path d="M16 23.5L24 28L32 23.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Organic leaf rising from urban matrix -->
+  <path d="M24 7C14 15 11 26 15 35C24 37 35 34 41 23C43 14 34 9 24 7Z" 
+        fill="url(#logoGrad)" 
+        fill-opacity="0.2" 
+        stroke="url(#logoGrad)" 
+        stroke-width="2.5" 
+        stroke-linejoin="round"/>
+
+  <!-- Central vein & water circulation channel -->
+  <path d="M15 35C22 30 28 22 32 12" stroke="#2dd4bf" stroke-width="2" stroke-linecap="round"/>
+  <path d="M22 26C26 26 29 24 33 21" stroke="#34d399" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M19 31C21 32 24 31 27 29" stroke="#34d399" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Infiltration droplet node -->
+  <circle cx="24" cy="7" r="2.5" fill="#38bdf8"/>
+</svg>

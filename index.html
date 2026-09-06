@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Santa Rita Verde | Infraestructura Urbana y Resiliencia Climática</title>
+  <meta name="description" content="Propuesta integral de Triple Impacto para mitigar inundaciones y revertir el déficit de espacios verdes en Villa Santa Rita mediante infraestructura verde y mapeo digital.">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+
+  <!-- Tipografía Outfit (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet.js (Mapas interactivos libres de API key) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
+  <!-- Estilos principales -->
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. BARRA DE NAVEGACIÓN SUPERIOR (GLASSMORPHISM)
+       ========================================================================= -->
+  <header>
+    <nav class="navbar" id="navbar">
+      <div class="container navbar__container">
+        <a href="#hero" class="navbar__brand" aria-label="Ir al inicio de Santa Rita Verde">
+          <img src="./assets/logo_santa_rita_verde.svg" alt="Isotipo Santa Rita Verde" class="navbar__brand-logo">
+          <span>Santa Rita</span> Verde
+        </a>
+
+        <button class="navbar__toggle" id="nav-toggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+          ☰
+        </button>
+
+        <ul class="navbar__nav" id="nav-menu">
+          <li><a href="#problema" class="navbar__link">Problema</a></li>
+          <li><a href="#transformacion" class="navbar__link">Transformación</a></li>
+          <li><a href="#sistema" class="navbar__link">Cómo Funciona</a></li>
+          <li><a href="#mapa" class="navbar__link">Mapa Crítico</a></li>
+          <li><a href="#fases" class="navbar__link">Metodología</a></li>
+          <li><a href="#impacto" class="navbar__link">Triple Impacto</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- =========================================================================
+         2. HERO SECTION
+         ========================================================================= -->
+    <section class="hero" id="hero">
+      <div class="hero__overlay"></div>
+      <div class="container">
+        <div class="hero__content">
+          <div class="hero__badges reveal">
+            <span class="badge"><span class="badge-dot"></span>Proyecto de Triple Impacto</span>
+            <span class="badge">AeroHack Joven — Equipo 2</span>
+            <span class="badge">ODS 11: Ciudades Sostenibles</span>
+          </div>
+
+          <h1 class="hero__title reveal">
+            Suelo que respira, <br>
+            <span class="accent">un barrio que no se inunda.</span>
+          </h1>
+
+          <p class="hero__subtitle reveal">
+            Transformamos el asfalto y el hormigón de Villa Santa Rita en infraestructura verde viva: jardines de lluvia, veredas permeables y terrazas que retienen el agua antes de que colapse la ciudad.
+          </p>
+
+          <div class="hero__actions reveal">
+            <a href="#transformacion" class="btn-primary">
+              Ver la Transformación
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+            <a href="#sistema" class="btn-secondary">Explorar el Sistema</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         3. CINTA DE ALIANZAS Y RESPALDO INSTITUCIONAL (LOGOS OFICIALES)
+         ========================================================================= -->
+    <section class="partners-ribbon" aria-label="Alianzas y Respaldo Institucional">
+      <div class="container">
+        <div class="partners-ribbon__header">
+          <p class="partners-ribbon__label">Iniciativa desarrollada y respaldada en el marco de</p>
+        </div>
+        <div class="partners-ribbon__logos">
+          <div class="partner-item" title="AeroHack Joven">
+            <img src="./assets/images/partner_aerohack.png" alt="AeroHack Joven" class="partner-logo partner-logo--aerohack">
+          </div>
+          <div class="partner-item" title="Fundación Ciencia Joven">
+            <img src="./assets/images/partner_ciencia_joven.png" alt="Fundación Ciencia Joven" class="partner-logo">
+          </div>
+          <div class="partner-item" title="The Boeing Company">
+            <img src="./assets/images/partner_boeing.png" alt="Boeing" class="partner-logo partner-logo--boeing">
+          </div>
+          <div class="partner-item" title="Fundación Panamericana para el Desarrollo (PADF)">
+            <img src="./assets/images/partner_padf.png" alt="PADF" class="partner-logo">
+          </div>
+          <div class="partner-item" title="STEM Americas">
+            <img src="./assets/images/partner_stem_americas.png" alt="STEM Americas" class="partner-logo">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         4. SECCIÓN: EL PROBLEMA
+         ========================================================================= -->
+    <section class="section" id="problema">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Diagnóstico Territorial</span>
+          <h2 class="section-title">El cemento no puede <span class="accent">beber agua</span></h2>
+          <p class="section-desc">
+            Villa Santa Rita sufre uno de los déficits de absorción e infraestructura verde más severos de la Ciudad de Buenos Aires.
+          </p>
+        </div>
+
+        <div class="problem-grid">
+          <div class="problem-narrative reveal">
+            <p>
+              La elevada impermeabilización urbana —calles asfaltadas, veredas monolíticas y techos sin cobertura natural— interrumpe el ciclo hidrológico. Cuando ocurren tormentas severas, el <strong>100% del caudal corre a gran velocidad por superficie</strong> hacia los desagües pluviales.
+            </p>
+            <p>
+              Durante el temporal extraordinario de octubre de 2025, el barrio fue epicentro de anegamientos severos, provocando daños materiales en viviendas familiares, pérdidas comerciales y parálisis en la circulación vecinal.
+            </p>
+            <div class="callout-box">
+              <div class="callout-box__header">
+                <svg class="callout-box__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                <strong>Diagnóstico Oficial de Vulnerabilidad</strong>
+              </div>
+              <p>
+                Según el informe legislativo (Matías Barroetaveña, 2021), el barrio cuenta con apenas entre <strong>0,01 m² y 0,2 m²</strong> de verde público por habitante, cuando la OMS establece un mínimo de <strong>9 m²</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="stats-grid reveal">
+            <article class="stat-card stat-card--accent">
+              <div class="stat-card__value">
+                <span class="stat-number" data-target="0.01">0</span>
+                <span class="stat-card__unit">m²</span>
+              </div>
+              <h3 class="stat-card__label">Verde por habitante en Villa Santa Rita</h3>
+              <p class="stat-card__detail">Alarma crítica: 900 veces por debajo del mínimo de la OMS.</p>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-card__value">
+                <span class="stat-number" data-target="9">0</span>
+                <span class="stat-card__unit">m²</span>
+              </div>
+              <h3 class="stat-card__label">Estándar mínimo OMS</h3>
+              <p class="stat-card__detail">15 m² recomendados por ONU-Habitat como estándar ideal.</p>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-card__value">
+                <span class="stat-number" data-target="100">0</span>
+                <span class="stat-card__unit">%</span>
+              </div>
+              <h3 class="stat-card__label">Reducción potencial de escorrentía</h3>
+              <p class="stat-card__detail">Comprobado internacionalmente mediante infraestructura verde urbana.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         5. SECCIÓN: LA TRANSFORMACIÓN (SLIDER ANTES / DESPUÉS)
+         ========================================================================= -->
+    <section class="section section--alt" id="transformacion">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Visión Proyectada</span>
+          <h2 class="section-title">De la inundación <span class="accent">a la resiliencia</span></h2>
+          <p class="section-desc">
+            Deslizá el visor central para contrastar una esquina típica de Villa Santa Rita en su estado actual frente a la intervención de Santa Rita Verde.
+          </p>
+        </div>
+
+        <div class="comparison-wrapper reveal">
+          <div class="comparison-slider" id="street-comparison-slider">
+            <!-- Capa Después (Fondo) -->
+            <div class="comparison-slider__image-box comparison-slider__after">
+              <img src="./assets/images/after-1.jpg" alt="Cuadra de Villa Santa Rita transformada con terrazas verdes, veredas permeables y jardines de lluvia" class="comparison-slider__image">
+              <span class="comparison-slider__label comparison-slider__label--after">Proyección: Santa Rita Verde</span>
+            </div>
+
+            <!-- Capa Antes (Superpuesta con Clip-Path) -->
+            <div class="comparison-slider__image-box comparison-slider__before">
+              <img src="./assets/images/before-1.jpg" alt="Cuadra de Villa Santa Rita en estado actual con asfalto agrietado, charcos de lluvia y sin vegetación" class="comparison-slider__image">
+              <span class="comparison-slider__label comparison-slider__label--before">Estado Actual: Suelo Impermeable</span>
+            </div>
+
+            <!-- Divisor Arrastrable -->
+            <div class="comparison-slider__handle" aria-hidden="true">
+              <div class="comparison-slider__handle-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="8 7 3 12 8 17"/>
+                  <polyline points="16 7 21 12 16 17"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <p class="comparison-hint">Arrastrá el divisor horizontalmente o usá las teclas de flecha izquierda / derecha</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         6. SECCIÓN: CÓMO FUNCIONA (DIAGRAMA INTERACTIVO SVG)
+         ========================================================================= -->
+    <section class="section" id="sistema">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Ingeniería Hidrológica</span>
+          <h2 class="section-title">El agua encuentra <span class="accent">su camino</span></h2>
+          <p class="section-desc">
+            Hacé clic en cualquier componente del corte transversal para descubrir cómo interactúan los elementos físicos y biológicos.
+          </p>
+        </div>
+
+        <div class="diagram-container reveal">
+          <!-- Diagrama SVG de Corte Transversal Urbano -->
+          <div class="diagram-svg-wrapper">
+            <svg class="layer-diagram-svg" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Corte esquemático del sistema hidrológico de Santa Rita Verde">
+              <defs>
+                <pattern id="soilPattern" width="12" height="12" patternUnits="userSpaceOnUse">
+                  <circle cx="2" cy="2" r="1.2" fill="#64748b" opacity="0.4"/>
+                  <circle cx="8" cy="8" r="1.5" fill="#475569" opacity="0.4"/>
+                </pattern>
+                <linearGradient id="terraceGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#34d399"/>
+                  <stop offset="100%" stop-color="#059669"/>
+                </linearGradient>
+                <linearGradient id="waterGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#38bdf8"/>
+                  <stop offset="100%" stop-color="#0284c7"/>
+                </linearGradient>
+              </defs>
+
+              <!-- FONDO CIELO -->
+              <rect x="0" y="0" width="800" height="260" fill="#070e1e" rx="8"/>
+
+              <!-- CAPA 1: LLUVIA -->
+              <g class="diagram-layer" data-layer="rain">
+                <text x="40" y="45" fill="#38bdf8" font-size="13" font-weight="700" letter-spacing="1">1. PRECIPITACIÓN INTENSA</text>
+                <path d="M 80 60 L 65 95 M 130 65 L 115 100 M 200 55 L 185 90 M 270 65 L 255 100 M 360 55 L 345 90 M 470 65 L 455 100 M 580 55 L 565 90 M 670 65 L 655 100 M 740 55 L 725 90" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" opacity="0.85" class="water-flow-line"/>
+              </g>
+
+              <!-- ESTRUCTURA EDIFICIO -->
+              <rect x="70" y="110" width="220" height="230" fill="#151f33" stroke="#253554" stroke-width="2"/>
+              <rect x="95" y="150" width="40" height="45" fill="#0c111d" rx="3"/>
+              <rect x="160" y="150" width="40" height="45" fill="#0c111d" rx="3"/>
+              <rect x="225" y="150" width="40" height="45" fill="#0c111d" rx="3"/>
+              <rect x="95" y="220" width="40" height="45" fill="#0c111d" rx="3"/>
+              <rect x="160" y="220" width="40" height="45" fill="#0c111d" rx="3"/>
+              <rect x="225" y="220" width="40" height="45" fill="#0c111d" rx="3"/>
+
+              <!-- CAPA 2: TERRAZA VERDE -->
+              <g class="diagram-layer" data-layer="terrace">
+                <rect x="60" y="100" width="240" height="22" fill="#5c2c10" rx="3"/>
+                <rect x="60" y="90" width="240" height="15" fill="url(#terraceGrad)" rx="3"/>
+                <path d="M 80 90 Q 85 75 90 90 Q 95 72 100 90 M 140 90 Q 145 74 150 90 Q 155 70 160 90 M 210 90 Q 215 76 220 90 Q 225 73 230 90 M 260 90 Q 265 77 270 90" stroke="#10b981" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <rect x="75" y="65" width="135" height="20" fill="#064e3b" rx="4"/>
+                <text x="82" y="79" fill="#34d399" font-size="11" font-weight="700">TERRAZA VERDE</text>
+              </g>
+
+              <!-- SUBSUELO URBANO -->
+              <rect x="0" y="340" width="800" height="180" fill="#0c111d"/>
+              <rect x="0" y="340" width="800" height="180" fill="url(#soilPattern)"/>
+
+              <!-- CAPA 3: VEREDA PERMEABLE -->
+              <g class="diagram-layer" data-layer="sidewalk">
+                <rect x="290" y="335" width="210" height="15" fill="#334155" stroke="#475569" stroke-width="1.5"/>
+                <line x1="330" y1="335" x2="330" y2="350" stroke="#0f172a" stroke-width="2"/>
+                <line x1="370" y1="335" x2="370" y2="350" stroke="#0f172a" stroke-width="2"/>
+                <line x1="410" y1="335" x2="410" y2="350" stroke="#0f172a" stroke-width="2"/>
+                <line x1="450" y1="335" x2="450" y2="350" stroke="#0f172a" stroke-width="2"/>
+                <rect x="290" y="350" width="210" height="40" fill="#1e293b" opacity="0.6"/>
+                <path d="M 350 355 L 350 385 M 430 355 L 430 385" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" class="water-flow-line"/>
+                <rect x="305" y="310" width="150" height="20" fill="#101726" stroke="#38bdf8" rx="4"/>
+                <text x="313" y="324" fill="#38bdf8" font-size="11" font-weight="700">VEREDA PERMEABLE</text>
+              </g>
+
+              <!-- CAPA 4: JARDÍN DE LLUVIA (DEFAULT) -->
+              <g class="diagram-layer is-active" data-layer="garden">
+                <path d="M 500 335 Q 540 375 620 375 Q 700 375 730 335 Z" fill="#132338" stroke="#0d9488" stroke-width="2"/>
+                <path d="M 520 345 Q 550 370 620 370 Q 690 370 710 345 Z" fill="#0f766e" opacity="0.45"/>
+                <path d="M 550 345 L 550 305 M 575 348 L 575 295 M 610 350 L 610 285 M 650 348 L 650 300 M 680 345 L 680 310" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="550" cy="302" r="4" fill="#f43f5e"/>
+                <circle cx="575" cy="292" r="5" fill="#f59e0b"/>
+                <circle cx="610" cy="282" r="6" fill="#38bdf8"/>
+                <circle cx="650" cy="297" r="4" fill="#ec4899"/>
+                <circle cx="680" cy="307" r="4" fill="#a855f7"/>
+                <rect x="545" y="248" width="145" height="22" fill="#0f766e" rx="4"/>
+                <text x="553" y="263" fill="#ffffff" font-size="11" font-weight="700">JARDÍN DE LLUVIA</text>
+              </g>
+
+              <!-- CAPA 5: CAÑERÍA PLUVIAL -->
+              <g class="diagram-layer" data-layer="pipe">
+                <rect x="620" y="415" width="170" height="28" fill="#151f33" stroke="#475569" stroke-width="2" rx="4"/>
+                <rect x="622" y="423" width="166" height="12" fill="url(#waterGrad)" rx="2"/>
+                <path d="M 620 375 L 620 415" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 3" class="water-flow-line"/>
+                <text x="635" y="460" fill="#94a3b8" font-size="11" font-weight="600">CAÑERÍA PLUVIAL (FLUJO LENTO)</text>
+              </g>
+
+              <!-- CAPA 6: ACUÍFERO SUBTERRÁNEO -->
+              <g class="diagram-layer" data-layer="aquifer">
+                <rect x="40" y="450" width="520" height="50" fill="rgba(56, 189, 248, 0.08)" stroke="rgba(56, 189, 248, 0.3)" stroke-dasharray="6 4" rx="6"/>
+                <text x="60" y="480" fill="#38bdf8" font-size="12" font-weight="700">RECARGA NATURAL DE LA NAPA FREÁTICA</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Panel de Información de Capa Activa -->
+          <div class="diagram-info-panel">
+            <!-- Capa Lluvia -->
+            <article class="layer-card" data-for="rain">
+              <div class="layer-card__header">
+                <div class="layer-card__icon-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/>
+                    <path d="M16 14v6M8 14v6M12 16v6"/>
+                  </svg>
+                </div>
+                <h3 class="layer-card__title">Precipitación Pluvial Extrema</h3>
+              </div>
+              <p class="layer-card__desc">
+                El cambio climático intensifica tormentas concentradas en corto tiempo. Sin infraestructura verde, el agua cae directo sobre superficies impermeables convirtiéndose en inundación superficial súbita.
+              </p>
+              <div class="layer-card__meta">
+                <span class="badge-dot"></span>
+                <span>Impacto: Escorrentía inmediata en menos de 5 minutos</span>
+              </div>
+            </article>
+
+            <!-- Capa Terraza Verde -->
+            <article class="layer-card" data-for="terrace">
+              <div class="layer-card__header">
+                <div class="layer-card__icon-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <path d="M9 22V12h6v10"/>
+                    <path d="M12 2v6"/>
+                  </svg>
+                </div>
+                <h3 class="layer-card__title">Terrazas y Cubiertas Verdes</h3>
+              </div>
+              <p class="layer-card__desc">
+                Sustratos absorbentes ligeros y especies botánicas sobre cubiertas planas que retienen entre un 30% y un 50% de la lluvia sobre techos, demorando y enfriando el escurrimiento antes de llegar a la calle.
+              </p>
+              <div class="layer-card__meta">
+                <span class="badge-dot"></span>
+                <span>Efecto: Retarda el pico pluvial hasta 45 minutos</span>
+              </div>
+            </article>
+
+            <!-- Capa Vereda Permeable -->
+            <article class="layer-card" data-for="sidewalk">
+              <div class="layer-card__header">
+                <div class="layer-card__icon-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
+                  </svg>
+                </div>
+                <h3 class="layer-card__title">Veredas Permeables Drenantes</h3>
+              </div>
+              <p class="layer-card__desc">
+                Pavimento poroso y adoquines articulados sobre base de áridos clasificados y geotextil que permiten el paso directo del agua hacia el subsuelo, evitando acumulaciones de agua en aceras peatonales.
+              </p>
+              <div class="layer-card__meta">
+                <span class="badge-dot"></span>
+                <span>Infiltración: Hasta 1500 mm/hora de capacidad drenante</span>
+              </div>
+            </article>
+
+            <!-- Capa Jardín de Lluvia (DEFAULT) -->
+            <article class="layer-card is-active" data-for="garden">
+              <div class="layer-card__header">
+                <div class="layer-card__icon-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="M12 8v8M8 12h8"/>
+                  </svg>
+                </div>
+                <h3 class="layer-card__title">Jardines de Lluvia (Biorretención)</h3>
+              </div>
+              <p class="layer-card__desc">
+                Depresiones en esquinas y canteros con vegetación nativa de raíces profundas. Reciben el agua excedente de calzada y vereda, filtran contaminantes y permiten que se absorba biológicamente en 12 a 24 horas.
+              </p>
+              <div class="layer-card__meta">
+                <span class="badge-dot"></span>
+                <span>Pilar Central: Reduce el pico de escurrimiento hasta un 100%</span>
+              </div>
+            </article>
+
+            <!-- Capa Cañería Pluvial -->
+            <article class="layer-card" data-for="pipe">
+              <div class="layer-card__header">
+                <div class="layer-card__icon-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="7" width="20" height="10" rx="3"/>
+                    <path d="M6 7v10M18 7v10"/>
+                  </svg>
+                </div>
+                <h3 class="layer-card__title">Cañería de Desagüe Descomprimida</h3>
+              </div>
+              <p class="layer-card__desc">
+                Al retenerse el agua en techos, veredas y jardines, el conducto subterráneo recibe solo un remanente atenuado. Esto previene el colapso hidráulico del sistema pluvial y elimina los desbordes en bocas de tormenta.
+              </p>
+              <div class="layer-card__meta">
+                <span class="badge-dot"></span>
+                <span>Seguridad: Elimina la sobrepresión en la red pluvial</span>
+              </div>
+            </article>
+
+            <!-- Capa Acuífero -->
+            <article class="layer-card" data-for="aquifer">
+              <div class="layer-card__header">
+                <div class="layer-card__icon-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                  </svg>
+                </div>
+                <h3 class="layer-card__title">Recarga Natural del Acuífero</h3>
+              </div>
+              <p class="layer-card__desc">
+                El agua limpia y filtrada por el estrato de suelo enriquece las reservas subterráneas, restaurando el balance hidrológico natural pre-urbanización de la cuenca metropolitana.
+              </p>
+              <div class="layer-card__meta">
+                <span class="badge-dot"></span>
+                <span>Ecosistema: Restaura el ciclo del agua subterránea</span>
+              </div>
+            </article>
+
+            <!-- Selector Rápido de Capas -->
+            <div class="layer-picker" role="tablist" aria-label="Seleccionar capa del sistema">
+              <button class="layer-picker__btn" data-layer="rain">01 Lluvia</button>
+              <button class="layer-picker__btn" data-layer="terrace">02 Terraza Verde</button>
+              <button class="layer-picker__btn" data-layer="sidewalk">03 Vereda Permeable</button>
+              <button class="layer-picker__btn is-active" data-layer="garden">04 Jardín de Lluvia</button>
+              <button class="layer-picker__btn" data-layer="pipe">05 Red Pluvial</button>
+              <button class="layer-picker__btn" data-layer="aquifer">06 Acuífero</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         7. SECCIÓN: MAPA INTERACTIVO DE VILLA SANTA RITA
+         ========================================================================= -->
+    <section class="section section--alt" id="mapa">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Territorio y Priorización</span>
+          <h2 class="section-title">Puntos críticos en <span class="accent">Villa Santa Rita</span></h2>
+          <p class="section-desc">
+            Georreferenciación de zonas críticas de anegamiento y localización de la primera cuadra testigo para la intervención piloto de infraestructura verde.
+          </p>
+        </div>
+
+        <div class="map-wrapper reveal">
+          <div id="map-container" class="map-container" role="application" aria-label="Mapa interactivo de Villa Santa Rita"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         8. SECCIÓN: METODOLOGÍA Y FASES DEL PROYECTO
+         ========================================================================= -->
+    <section class="section" id="fases">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Metodología de Innovación</span>
+          <h2 class="section-title">Design Thinking en <span class="accent">6 Fases</span></h2>
+          <p class="section-desc">
+            El camino riguroso recorrido por el Equipo 2 durante el certamen AeroHack Joven para madurar la solución desde la empatía barrial hasta el prototipado validado.
+          </p>
+        </div>
+
+        <div class="timeline reveal">
+          <!-- Fase 1 -->
+          <div class="timeline-item">
+            <div class="timeline-marker">1</div>
+            <div class="timeline-card">
+              <span class="timeline-card__phase">Fase 1</span>
+              <h3 class="timeline-card__title">Empatizar</h3>
+              <p class="timeline-card__desc">
+                Relevamiento y mapeo de dolores con jóvenes de 18 a 30 años, residentes y trabajadores de Villa Santa Rita. Detección de la dependencia pasiva del sistema de desagües y el éxodo hacia comunas vecinas para acceder a verde.
+              </p>
+            </div>
+          </div>
+
+          <!-- Fase 2 -->
+          <div class="timeline-item">
+            <div class="timeline-marker">2</div>
+            <div class="timeline-card">
+              <span class="timeline-card__phase">Fase 2</span>
+              <h3 class="timeline-card__title">Definir</h3>
+              <p class="timeline-card__desc">
+                Focalización en el indicador crítico: 0,01 m² de verde por habitante. Delimitación del problema técnico y alineación estratégica con el ODS 11 (Ciudades y Comunidades Sostenibles).
+              </p>
+            </div>
+          </div>
+
+          <!-- Fase 3 -->
+          <div class="timeline-item">
+            <div class="timeline-marker">3</div>
+            <div class="timeline-card">
+              <span class="timeline-card__phase">Fase 3</span>
+              <h3 class="timeline-card__title">Idear</h3>
+              <p class="timeline-card__desc">
+                Diseño de la solución de Triple Impacto 'Santa Rita Verde': articulación de intervención física piloto, plataforma digital de asesoramiento técnico y campaña comunitaria escolar.
+              </p>
+            </div>
+          </div>
+
+          <!-- Fase 4 -->
+          <div class="timeline-item">
+            <div class="timeline-marker">4</div>
+            <div class="timeline-card">
+              <span class="timeline-card__phase">Fase 4</span>
+              <h3 class="timeline-card__title">Prototipar</h3>
+              <p class="timeline-card__desc">
+                Diseño conceptual de flujos hidrológicos y maqueta de cuadra representativa. Análisis de factibilidad de materiales locales (geotextiles, baldosas porosas, flora nativa) y software SIG (QGIS).
+              </p>
+            </div>
+          </div>
+
+          <!-- Fase 5 -->
+          <div class="timeline-item">
+            <div class="timeline-marker">5</div>
+            <div class="timeline-card">
+              <span class="timeline-card__phase">Fase 5</span>
+              <h3 class="timeline-card__title">Testear</h3>
+              <p class="timeline-card__desc">
+                Validación empírica con encuestas y entrevistas a vecinos, docentes y estudiantes. Identificación de la necesidad de detallar costos, cronogramas y gobernanza compartida de mantenimiento.
+              </p>
+            </div>
+          </div>
+
+          <!-- Fase 6 -->
+          <div class="timeline-item">
+            <div class="timeline-marker">6</div>
+            <div class="timeline-card">
+              <span class="timeline-card__phase">Fase 6</span>
+              <h3 class="timeline-card__title">Comunicar</h3>
+              <p class="timeline-card__desc">
+                Estructuración del Pitch ejecutivo de 3 minutos (Gancho, Problema, Solución, Viabilidad y Proyecciones) ante el comité evaluador de Fundación Ciencia Joven, STEM Americas y Boeing.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         9. SECCIÓN: TRIPLE IMPACTO (ICONOS VECTORIALES PROFESIONALES)
+         ========================================================================= -->
+    <section class="section" id="impacto">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Sostenibilidad Integral</span>
+          <h2 class="section-title">Ejes de <span class="accent">Triple Impacto</span></h2>
+          <p class="section-desc">
+            Una solución duradera equilibra el bienestar comunitario, la regeneración del ecosistema y la viabilidad económica municipal.
+          </p>
+        </div>
+
+        <div class="impact-grid reveal">
+          <!-- Social -->
+          <article class="impact-card">
+            <div class="impact-card__icon-box impact-card__icon-box--social">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <h3 class="impact-card__title">Impacto Social</h3>
+            <p class="impact-card__desc">
+              Mejora sustancial en la calidad de vida barrial, mitigación de la vulnerabilidad ante alertas meteorológicas y creación de nuevos espacios biófilos de encuentro, recreación y descanso para los vecinos.
+            </p>
+          </article>
+
+          <!-- Ambiental -->
+          <article class="impact-card">
+            <div class="impact-card__icon-box impact-card__icon-box--environmental">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12A10 10 0 0 1 12 2z"/>
+                <path d="M12 8a4 4 0 1 0 4 4c0-2-4-6-4-6s-4 4-4 6a4 4 0 0 0 4-4z"/>
+              </svg>
+            </div>
+            <h3 class="impact-card__title">Impacto Ambiental</h3>
+            <p class="impact-card__desc">
+              Retención de hasta el 100% de la escorrentía superficial en áreas intervenidas, recarga natural del acuífero freático, atenuación del efecto isla de calor y atracción de aves y polinizadores autóctonos.
+            </p>
+          </article>
+
+          <!-- Económico -->
+          <article class="impact-card">
+            <div class="impact-card__icon-box impact-card__icon-box--economic">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"/>
+                <path d="M18.5 8.5L13.5 13.5L9.5 9.5L4 15"/>
+                <polyline points="14 8.5 18.5 8.5 18.5 13"/>
+              </svg>
+            </div>
+            <h3 class="impact-card__title">Impacto Económico</h3>
+            <p class="impact-card__desc">
+              Inversión modular significativamente inferior a las obras de hormigón subterráneo pesado, reducción drástica de pérdidas materiales en hogares y menores costos de mantenimiento de la red pluvial.
+            </p>
+          </article>
+        </div>
+
+        <!-- Banner de Cierre -->
+        <div class="cta-banner reveal">
+          <h2>Seamos parte del cambio</h2>
+          <p>
+            Transformar Villa Santa Rita en un barrio preparado frente al cambio climático es una responsabilidad colectiva entre vecinos, desarrolladores y organismos públicos.
+          </p>
+          <a href="#hero" class="btn-primary">
+            Sumate a la Iniciativa
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       10. FOOTER
+       ========================================================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="./assets/logo_santa_rita_verde.svg" alt="Santa Rita Verde" class="footer__brand-logo">
+          <div>
+            <h3>Santa Rita <span>Verde</span></h3>
+            <p>Infraestructura Verde Urbana y Resiliencia Climática</p>
+          </div>
+        </div>
+        <div class="footer__meta">
+          <p><strong>AeroHack Joven — Equipo 2</strong></p>
+          <p>Fundación Ciencia Joven &bull; STEM Americas &bull; PADF &bull; Boeing</p>
+          <p>ODS 11: Ciudades y Comunidades Sostenibles</p>
+        </div>
+      </div>
+      <div class="footer__copyright">
+        <p>&copy; 2026 Santa Rita Verde. Diseño técnico e identidad visual profesional.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts: Leaflet CDN + Orquestador ES Module -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
