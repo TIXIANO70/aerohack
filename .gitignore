@@ -6,3 +6,4 @@ Thumbs.db
 # Entorno local
 .env
 .env.*
+.superpowers/

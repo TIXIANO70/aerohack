@@ -1,6 +1,6 @@
 /**
  * @file map.js
- * @description Integración y renderizado lazy del mapa interactivo de Villa Santa Rita con Leaflet.js.
+ * @description Integración y renderizado lazy del mapa interactivo de Villa Santa Rita con Leaflet.js y CartoDB Voyager.
  */
 
 const VILLA_SANTA_RITA_COORDS = [-34.6168, -58.4830];
@@ -42,56 +42,58 @@ const MAP_LOCATIONS = [
   {
     coords: [-34.6163, -58.4812],
     title: 'Cuadra Piloto: Terrero y J.A. García',
-    desc: 'Propuesta de intervención integral: jardines de lluvia en esquinas, veredas permeables y terraza demostrativa.',
+    desc: 'Propuesta de intervención integral de Santa Rita Verde: jardines de lluvia en esquinas, veredas porosas y terraza demostrativa.',
     tag: 'Intervención Piloto',
     isPrimary: true,
   },
   {
     coords: [-34.6135, -58.4860],
     title: 'Av. Álvarez Jonte y Cuenca',
-    desc: 'Punto crítico de saturación y anegamiento superficial reportado durante temporales extremos (Oct. 2025).',
+    desc: 'Punto crítico de saturación y anegamiento superficial severo reportado durante temporales extraordinarios.',
     tag: 'Zona Crítica de Anegamiento',
     isPrimary: false,
   },
   {
     coords: [-34.6190, -58.4802],
     title: 'Av. Nazca y Elpidio González',
-    desc: 'Eje de alta impermeabilización con escurrimiento acelerado hacia desagües pluviales saturados.',
+    desc: 'Eje de alta impermeabilización con escurrimiento acelerado hacia desagües pluviales colapsados.',
     tag: 'Escorrentía Severa',
     isPrimary: false,
   },
   {
     coords: [-34.6180, -58.4852],
-    title: 'Plaza de Villa Santa Rita',
-    desc: 'Espacio verde barrial existente. Evidencia el déficit estructural (apenas 0,01 m² de verde por habitante).',
+    title: 'Plazoleta Santa Rita',
+    desc: 'Espacio verde barrial existente que evidencia el déficit estructural del barrio (apenas 0,01 m² por habitante).',
     tag: 'Espacio Verde Existente',
     isPrimary: false,
   },
 ];
 
 /**
- * Crea un icono SVG personalizado para Leaflet.
+ * Crea un icono SVG personalizado para Leaflet con estética arquitectónica y limpia.
  * @param {boolean} isPrimary
  */
 function createCustomPin(isPrimary) {
-  const pinColor = isPrimary ? '#2dd4bf' : '#38bdf8';
-  const glowColor = isPrimary ? 'rgba(45, 212, 191, 0.4)' : 'rgba(56, 189, 248, 0.25)';
+  const pinBg = isPrimary ? '#1B4332' : '#9C5838';
+  const pinBorder = '#FFFFFF';
+  const pinShadow = isPrimary ? 'rgba(27, 67, 50, 0.35)' : 'rgba(156, 88, 56, 0.35)';
 
   const innerSvg = isPrimary
-    ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${pinColor}" stroke-width="2.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="${pinColor}"/></svg>`
-    : `<svg width="10" height="10" viewBox="0 0 24 24" fill="${pinColor}"><circle cx="12" cy="12" r="6"/></svg>`;
+    ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="#FFFFFF"/></svg>`
+    : `<svg width="10" height="10" viewBox="0 0 24 24" fill="#FFFFFF"><circle cx="12" cy="12" r="6"/></svg>`;
 
   const html = `
     <div style="
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      background: #0c111d;
-      border: 2px solid ${pinColor};
-      box-shadow: 0 0 12px ${glowColor};
+      background: ${pinBg};
+      border: 2px solid ${pinBorder};
+      box-shadow: 0 2px 8px ${pinShadow};
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.2s ease;
     ">
       ${innerSvg}
     </div>
@@ -100,70 +102,55 @@ function createCustomPin(isPrimary) {
   return window.L.divIcon({
     className: 'custom-map-pin',
     html: html,
-    iconSize: [30, 30],
-    iconAnchor: [15, 15],
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
     popupAnchor: [0, -16],
   });
 }
 
-// Clave pública para basemaps oscuros de CARTO
-const DEFAULT_CARTO_API_KEY = 'cb1_2yk5_1_df335013d3ba1683ed6841b5';
-
 /**
  * Inicializa la instancia del mapa Leaflet.
  */
-async function buildMap() {
+function buildMap() {
   const mapContainer = document.getElementById('map-container');
   if (!mapContainer || !window.L) return;
 
-  // Carga defensiva de la API key desde config.js con fallback garantizado
-  let apiKey = DEFAULT_CARTO_API_KEY;
-  try {
-    const config = await import('./config.js');
-    if (config.CARTO_API_KEY && config.CARTO_API_KEY !== 'TU_API_KEY_AQUI') {
-      apiKey = config.CARTO_API_KEY.trim();
-    }
-  } catch {
-    // Si config.js no carga (ej. CORS en file://), mantiene la clave por defecto
-  }
-
   const map = window.L.map('map-container', {
-    scrollWheelZoom: false, // Evita atrapar el scroll de página accidentalmente
+    scrollWheelZoom: false, // Evita atrapar el scroll accidentalmente
   }).setView(VILLA_SANTA_RITA_COORDS, MAP_INITIAL_ZOOM);
 
-  const tileUrl = apiKey
-    ? `https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png?key=${apiKey}`
-    : 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png';
+  // Basemap OpenStreetMap estándar: cartografía clara, cálida y libre de marcas de agua
+  const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
   window.L.tileLayer(tileUrl, {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    subdomains: 'abc',
     maxZoom: MAP_MAX_ZOOM,
   }).addTo(map);
 
   // 1. Capa Poligonal: Perímetro de Sellado y Déficit Verde de Villa Santa Rita
   const districtPolygon = window.L.polygon(VILLA_SANTA_RITA_POLYGON, {
-    color: '#f43f5e',
+    color: '#9C5838',
     weight: 2,
-    dashArray: '6, 6',
-    fillColor: '#f43f5e',
+    dashArray: '5, 5',
+    fillColor: '#9C5838',
     fillOpacity: 0.08,
   }).addTo(map);
 
   districtPolygon.bindTooltip(`
-    <div class="map-district-tooltip">
-      <div class="tooltip-title">Perímetro de Villa Santa Rita</div>
-      <div class="tooltip-metric"><span class="accent-danger">Déficit verde:</span> 0,01 m²/hab <small>(OMS: 9 m²)</small></div>
-      <div class="tooltip-metric"><span class="accent-warning">Suelo impermeable:</span> > 95% asfalto y hormigón</div>
+    <div style="font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.4;">
+      <strong style="font-family: 'Newsreader', serif; font-size: 14px; display: block; margin-bottom: 2px;">Perímetro Villa Santa Rita</strong>
+      <div>Déficit verde: <strong style="color: #991B1B;">0,01 m²/hab</strong> (OMS: 9 m²)</div>
+      <div>Sellado de suelo: <strong style="color: #9C5838;">&gt; 95% asfalto</strong></div>
     </div>
   `, { sticky: true });
 
-  // 2. Resaltado de Espacio Verde Existente (Contraste visual de escala 0,01 m²/hab)
+  // 2. Resaltado de Espacio Verde Existente
   window.L.circle([-34.6180, -58.4852], {
-    radius: 40,
-    color: '#10b981',
-    fillColor: '#10b981',
-    fillOpacity: 0.75,
+    radius: 45,
+    color: '#2D6A4F',
+    fillColor: '#2D6A4F',
+    fillOpacity: 0.5,
     weight: 2,
   }).addTo(map);
 
@@ -187,7 +174,7 @@ async function buildMap() {
     }
   });
 
-  // 4. Leyenda Interactiva Flotante (Glassmorphism)
+  // 4. Leyenda Interactiva Flotante
   const legend = window.L.control({ position: 'bottomleft' });
   legend.onAdd = function () {
     const div = window.L.DomUtil.create('div', 'map-legend');
@@ -202,12 +189,12 @@ async function buildMap() {
         <span>Espacio Verde (0,01 m²/hab)</span>
       </div>
       <div class="map-legend__item">
-        <span class="map-legend__swatch map-legend__swatch--primary"></span>
+        <span class="map-legend__swatch" style="background-color: #1B4332;"></span>
         <span>Cuadra Piloto (Santa Rita Verde)</span>
       </div>
       <div class="map-legend__item">
-        <span class="map-legend__swatch map-legend__swatch--flood"></span>
-        <span>Puntos Críticos de Anegamiento</span>
+        <span class="map-legend__swatch" style="background-color: #9C5838;"></span>
+        <span>Puntos de Escorrentía Severa</span>
       </div>
     `;
     return div;
