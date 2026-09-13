@@ -709,7 +709,7 @@ button {
 .comparison-slider {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9.5;
+  aspect-ratio: 1024 / 683;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--color-border-medium);
@@ -734,6 +734,10 @@ button {
   display: block;
 }
 
+.comparison-slider__after {
+  z-index: 1;
+}
+
 .comparison-slider__before {
   clip-path: inset(0 50% 0 0);
   z-index: 2;
@@ -750,9 +754,10 @@ button {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   border-radius: var(--radius-xs);
-  z-index: 5;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+  transition: opacity 0.15s ease;
 }
 
 .comparison-slider__label--before {
@@ -760,6 +765,7 @@ button {
   background: rgba(15, 23, 42, 0.85);
   color: #F1F5F9;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 4;
 }
 
 .comparison-slider__label--after {
@@ -767,6 +773,7 @@ button {
   background: rgba(27, 67, 50, 0.88);
   color: #FFFFFF;
   border: 1px solid rgba(64, 145, 108, 0.4);
+  z-index: 1;
 }
 
 .comparison-slider__handle {

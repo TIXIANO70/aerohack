@@ -16,6 +16,8 @@ export class ComparisonSlider {
     this.container = containerEl;
     this.handle = containerEl.querySelector('.comparison-slider__handle');
     this.beforeBox = containerEl.querySelector('.comparison-slider__before');
+    this.beforeLabel = containerEl.querySelector('.comparison-slider__label--before');
+    this.afterLabel = containerEl.querySelector('.comparison-slider__label--after');
 
     if (!this.handle || !this.beforeBox) return;
 
@@ -114,6 +116,27 @@ export class ComparisonSlider {
     this.beforeBox.style.clipPath = `inset(0 ${rightInset}% 0 0)`;
     this.handle.style.left = `${clamped}%`;
     this.container.setAttribute('aria-valuenow', Math.round(clamped).toString());
+
+    // Desvanecer etiquetas a medida que el divisor se aproxima a los extremos
+    if (this.beforeLabel) {
+      if (clamped <= 8) {
+        this.beforeLabel.style.opacity = '0';
+      } else if (clamped < 28) {
+        this.beforeLabel.style.opacity = String((clamped - 8) / 20);
+      } else {
+        this.beforeLabel.style.opacity = '1';
+      }
+    }
+
+    if (this.afterLabel) {
+      if (clamped >= 92) {
+        this.afterLabel.style.opacity = '0';
+      } else if (clamped > 72) {
+        this.afterLabel.style.opacity = String((92 - clamped) / 20);
+      } else {
+        this.afterLabel.style.opacity = '1';
+      }
+    }
   }
 }
 
